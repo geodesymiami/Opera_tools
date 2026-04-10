@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: opera-tools
+Version: 0.1.0
+Summary: Tools for working with OPERA SAR/InSAR product files
+Home-page: https://github.com/geodesymiami/Opera_tools
+Author: geodesymiami
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Topic :: Scientific/Engineering :: GIS
+Classifier: Topic :: Scientific/Engineering :: Image Processing
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+# Opera_tools
