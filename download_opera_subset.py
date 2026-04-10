@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 
 import os
 script_name = os.path.basename(__file__)
