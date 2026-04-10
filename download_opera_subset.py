@@ -59,6 +59,11 @@ def main():
         "lat_max": bbox[3]
     }
 
+    if not os.path.isabs(args.input_dir):
+        args.input_dir = os.path.join(os.getcwd(),args.input_dir)
+    if not os.path.exists(args.input_dir):
+        os.makedirs(args.input_dir, exist_ok=True)
+
     url = [getattr(r, 'properties')['url'] for r in results]
     file_size, subset_size, ratio, stack_gb, bbox = estimate_stack_size(url, bbox_bounds, username, password)
 
