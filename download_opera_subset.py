@@ -3,7 +3,7 @@
 import os
 script_name = os.path.basename(__file__)
 description = f"Download and subset Sentinel-1 displacement files from ASF for a specified region and time range.\n\n"
-epi = f"Example usage: {script_name} --input_dir /Users/giacomo/onedrive/scratch/opera_download/Popcatepetl --polygon 'POLYGON((-98.7393 18.9444,-98.5146 18.9444,-98.5146 19.0774,-98.7393 19.0774,-98.7393 18.9444))' --flight_direction DESCENDING --start_date 20170101 --end_date 20170301"
+epi = f"Example usage: {script_name} --dir opera_download/Popcatepetl --polygon 'POLYGON((-98.7393 18.9444,-98.5146 18.9444,-98.5146 19.0774,-98.7393 19.0774,-98.7393 18.9444))' --flight--direction DESCENDING --start 20170101 --end 20170301"
 
 from displacement_tools import download_disp_files, estimate_stack_size
 import asf_search as asf
@@ -27,11 +27,11 @@ def parse_polygon(polygon):
 
 def main():
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter, epilog=epi)
-    parser.add_argument('--input_dir', type=str, required=True, help='Output directory for downloaded files')
+    parser.add_argument('--dir', dest='input_dir', type=str, required=True, help='Output directory for downloaded files')
     parser.add_argument('--polygon', type=str, required=True, help='Polygon string in WKT format (e.g., "POLYGON((lon1 lat1, lon2 lat2, ...))")')
-    parser.add_argument('--flight_direction', type=str, choices=['ASCENDING', 'DESCENDING'], required=True, help='Flight direction (ASCENDING or DESCENDING)')
-    parser.add_argument('--start_date', type=str, required=True, help='Start date in YYYYMMDD format')
-    parser.add_argument('--end_date', type=str, required=True, help='End date in YYYYMMDD format')
+    parser.add_argument('--flight-direction', dest='flight_direction', type=str, choices=['ASCENDING', 'DESCENDING'], required=True, help='Flight direction (ASCENDING or DESCENDING)')
+    parser.add_argument('--start',dest='start_date', type=str, default='20160701', help='Start date in YYYYMMDD format')
+    parser.add_argument('--end', dest='end_date', default=datetime.datetime.today().strftime("%Y%m%d"),type=str, help='End date in YYYYMMDD format')
     args = parser.parse_args()
 
     host = 'urs.earthdata.nasa.gov'
