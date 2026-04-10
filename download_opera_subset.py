@@ -3,7 +3,7 @@
 import os
 script_name = os.path.basename(__file__)
 description = f"Download and subset Sentinel-1 displacement files from ASF for a specified region and time range.\n\n"
-epi = f"Example usage: python {script_name} --input_dir /Users/giacomo/onedrive/scratch/opera_download/Popcatepetl --polygon 'POLYGON((-98.7393 18.9444,-98.5146 18.9444,-98.5146 19.0774,-98.7393 19.0774,-98.7393 18.9444))' --flight_direction DESCENDING --start_date 20170101 --end_date 20170301"
+epi = f"Example usage: {script_name} --input_dir /Users/giacomo/onedrive/scratch/opera_download/Popcatepetl --polygon 'POLYGON((-98.7393 18.9444,-98.5146 18.9444,-98.5146 19.0774,-98.7393 19.0774,-98.7393 18.9444))' --flight_direction DESCENDING --start_date 20170101 --end_date 20170301"
 
 from displacement_tools import download_disp_files, estimate_stack_size
 import asf_search as asf
