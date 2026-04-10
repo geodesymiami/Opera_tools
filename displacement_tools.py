@@ -54,13 +54,6 @@ import matplotlib.patches as patches
 import matplotlib.ticker as mticker
 import matplotlib.dates as mdates
 
-# --- Widgets / UI ---
-from ipywidgets import (Output, VBox, HBox, Layout, ToggleButton, Button, IntSlider, Play, jslink, Label, Checkbox)
-from IPython.display import display, Javascript, Markdown
-
-# --- Interactive Maps ---
-from ipyleaflet import (Map, Marker, ImageOverlay, DrawControl, GeoJSON, FeatureGroup, LayersControl, CircleMarker, basemaps)
-
 # --- Project-specific modules ---
 import opera_utils
 from opera_utils.disp._search import search
