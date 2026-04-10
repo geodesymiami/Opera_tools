@@ -9,8 +9,8 @@ conda install -c conda-forge python==3.11.13 gdal libgdal-netcdf
 ```bash
 cd Opera_tools
 export OPERA_TOOLS=${PWD}
-export PATH=${OPERA_TOOLS}/src/cli:$PATH
-export PYTHONPATH=${OPERA_TOOLS}/src:${OPERA_TOOLS}/src/VSM/VSM:$PYTHONPATH
+export PATH=${OPERA_TOOLS}/:$PATH
+export PYTHONPATH=${OPERA_TOOLS}/:$PYTHONPATH
 ```
 ```bash
 python -c "from setup_env import install_dependencies; install_dependencies()"
