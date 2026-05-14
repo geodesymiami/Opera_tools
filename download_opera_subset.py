@@ -3,7 +3,7 @@
 import os
 script_name = os.path.basename(__file__)
 description = f"Download and subset Sentinel-1 displacement files from ASF for a specified region and time range.\n\n"
-epi = f"Example usage: {script_name} --input_dir /Users/giacomo/onedrive/scratch/opera_download/Popcatepetl --polygon 'POLYGON((-98.7393 18.9444,-98.5146 18.9444,-98.5146 19.0774,-98.7393 19.0774,-98.7393 18.9444))' --flight_direction DESCENDING --start_date 20170101 --end_date 20170301"
+epi = f"Example usage: {script_name} --dir /Users/giacomo/onedrive/scratch/opera_download/Popcatepetl --polygon 'POLYGON((-98.7393 18.9444,-98.5146 18.9444,-98.5146 19.0774,-98.7393 19.0774,-98.7393 18.9444))' --flight_direction DESCENDING --start_date 20170101 --end_date 20170301"
 
 from displacement_tools import download_disp_files, estimate_stack_size
 import asf_search as asf
@@ -27,11 +27,11 @@ def parse_polygon(polygon):
 
 def main():
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter, epilog=epi)
-    parser.add_argument('--input_dir', type=str, required=True, help='Output directory for downloaded files')
+    parser.add_argument('--dir', type=str, required=True, help='Output directory for downloaded files')
     parser.add_argument('--polygon', type=str, required=True, help='Polygon string in WKT format (e.g., "POLYGON((lon1 lat1, lon2 lat2, ...))")')
-    parser.add_argument('--flight_direction', type=str, choices=['ASCENDING', 'DESCENDING'], required=True, help='Flight direction (ASCENDING or DESCENDING)')
-    parser.add_argument('--start_date', type=str, required=True, help='Start date in YYYYMMDD format')
-    parser.add_argument('--end_date', type=str, required=True, help='End date in YYYYMMDD format')
+    parser.add_argument('--flight_direction', type=str, default=['ASCENDING', 'DESCENDING'], choices=['ASCENDING', 'DESCENDING'], help='Flight direction (ASCENDING or DESCENDING)')
+    parser.add_argument('--start_date', type=str, help='Start date in YYYYMMDD format')
+    parser.add_argument('--end_date', type=str, help='End date in YYYYMMDD format')
     args = parser.parse_args()
 
     host = 'urs.earthdata.nasa.gov'
@@ -44,8 +44,8 @@ def main():
     results = asf.search(
         platform=asf.PLATFORM.SENTINEL1,
         processingLevel=asf.PRODUCT_TYPE.DISP_S1,
-        start=datetime.datetime.strptime(args.start_date, '%Y%m%d').date(),
-        end=datetime.datetime.strptime(args.end_date, '%Y%m%d').date(),
+        start=datetime.datetime.strptime(args.start_date, '%Y%m%d').date() if args.start_date else datetime.datetime.strptime('20160701', '%Y%m%d').date(),
+        end=datetime.datetime.strptime(args.end_date, '%Y%m%d').date() if args.end_date else datetime.datetime.today().date(),
         intersectsWith=args.polygon,
         flightDirection=args.flight_direction,
         dataset=asf.DATASET.OPERA_S1,
@@ -68,7 +68,7 @@ def main():
     print(f"Estimated stack size after subsetting: {stack_gb:.2f} GB")
     print(f"BBOX for subsetting: {bbox}")
 
-    download_disp_files(url, bbox, args.input_dir, username, password, 5)
+    download_disp_files(url, bbox, args.dir, username, password, 5)
 
 if __name__ == "__main__":
     main()
